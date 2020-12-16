@@ -17,4 +17,6 @@ public interface StudentService {
 
     public List<?> list();
 
+    public int delete(StudentDto student);
+
 }

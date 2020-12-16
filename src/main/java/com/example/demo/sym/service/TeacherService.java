@@ -14,4 +14,8 @@ public interface TeacherService {
 
     public TeacherDto findById(String teaNum);
 
+    public int update(TeacherDto teacher);
+
+    public int delete(TeacherDto teacher);
+
 }

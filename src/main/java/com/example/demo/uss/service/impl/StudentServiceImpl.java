@@ -34,4 +34,9 @@ public class StudentServiceImpl implements StudentService {
         return studentMapper.selectAll();
     }
 
+    @Override
+    public int delete(StudentDto student) {
+        return studentMapper.delete(student);
+    }
+
 }

@@ -8,6 +8,7 @@ import com.example.demo.uss.service.model.StudentDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,4 +62,12 @@ public class StudentController {
         return studentService.list();
     }
 
+    @DeleteMapping("")
+    public Map<?, ?> delete(@RequestBody StudentDto student) {
+        logger.info("학생번호 삭제 요청 진입 : 삭제정보 =" + student.getStuNum());
+        var map = new HashMap<>();
+        int result = studentService.delete(student);
+        map.put("message", (result == 1) ? "SUCCESS" : "FAILURE");
+        return map;
+    }
 }

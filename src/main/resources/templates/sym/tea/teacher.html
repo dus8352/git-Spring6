@@ -499,7 +499,7 @@
 								<li class="list-inline-item">
 									<a class="text-muted" href="#">Terms</a>
 								</li>
-							</ul>
+							</ul>   
 						</div>
 					</div>
 				</div>
@@ -526,20 +526,61 @@
 							
 			$(`#about`).html(`<h5 class="h6 card-title">About</h5>
 									<ul class="list-unstyled mb-0">
-										<li class="mb-1"><span data-feather="home" class="feather-sm mr-1"></span> 교강사번호 : <a href="#">${d.teaNum}</a></li>
+										<li class="mb-1"><s	pan data-feather="home" class="feather-sm mr-1"></span> 교강사번호 : <a href="#">${d.teaNum}</a></li>
 
 										<li id="updateEmail" class="mb-1"><span data-feather="briefcase" class="feather-sm mr-1"></span> 이메일 : <a href="#">${d.email}</a></li>
 										<li id="updateAddr"class="mb-1"><span data-feather="map-pin" class="feather-sm mr-1"></span> 주소 : <a href="#">서울</a></li>
                                     </ul>`)
         $(`#info-update`).click(e => {
-            alert('수정클릭')
-            $(`#updateSubject`).html(`<input type="text" placeholder="${d.subject}">`)
-            $(`updateEmail`).html(`<span data-feather="briefcase" class="feather-sm mr-1"></span> 이메일 : <input type="text" placeholder="${d.email}">`)
+            $(`#updateSubject`).html(`<input id="changeSubject" type="text" value="${d.subject}" placeholder="${d.subject}">`)
+            $(`#updateEmail`).html(`<span data-feather="briefcase" class="feather-sm mr-1"></span> 이메일 : <input id="changeEmail" type="text" value="${d.email}" placeholder="${d.email}">`)
             $(`#updateAddr`).html(`<span data-feather="map-pin" class="feather-sm mr-1"></span> 주소 : <input type="text" placeholder="서울"<br/>
-            <button>수정확인</button> <button>수정취소</button>`) 
+            <button id="updateConfirm">수정확인</button> <button id="updateCancel">수정취소</button>`)
+ 
+            $(`#updateConfirm`).click(e => {
+                alert(`수정확인`)
+                $.ajax({
+                    url: `/teachers`,
+                    type: `PUT`,
+                    data: JSON.stringify({
+                        teaNum: d.teaNum,
+                        subject: $(`#changeSubject`).val() ,
+                        email: $(`#changeEmail`).val()
+                    }),
+                    dataType: `json`,
+                    contentType: `application/json`,
+                    success: d2 => {
+                        if(d2.message === 'SUCCESS'){
+                            location.href = `/transfer/sym/tea/teacher`
+                        }else{
+                            alert(`수정에 실패했습니다`)
+                            location.href = `/transfer/sym/tea/teacher`
+                        }
+                    },
+                    error: e => { alert(`수정오류`)}
+            })
         })
+    })
         $(`#info-delete`).click(e => {
-            alert('삭제클릭')
+            $.ajax({
+                url: `/teachers`,
+                type: `DELETE`,
+                data: JSON.stringify({
+                    teaNum: d.teaNum
+                }),
+                dataType: `json`,
+                contentType: `application/json`,
+                success: d2 => {
+                    if(d2.message === 'SUCCESS'){
+                        location.href = `/transfer/sym/mgr/index`
+                    }else{
+                        alert(`삭제 실패`)
+                    }
+                },
+                error: e => {
+                    alert(`AJAX 삭제 실패`)
+                }
+            })
         })
     })
     </script>

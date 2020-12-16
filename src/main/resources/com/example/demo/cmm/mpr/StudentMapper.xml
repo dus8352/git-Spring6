@@ -23,4 +23,8 @@
     select stu_num stuNum, userid, password, name, ssn, reg_date regDate, subject, profile_image profileImage
     from students 
    </select>
+   <delete id="delete" parameterType="com.example.demo.uss.service.model.StudentDto">
+       delete from students
+       where stu_num like #{stuNum}
+   </delete>
 </mapper>

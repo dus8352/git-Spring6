@@ -17,4 +17,6 @@ public interface StudentMapper {
 
     public List<StudentDto> selectAll();
 
+    public int delete(StudentDto student);
+
 }
